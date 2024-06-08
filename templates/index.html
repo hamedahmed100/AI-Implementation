@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Car Price Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/img/im.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+            margin: 0;
+            /* Remove default margin */
+            height: 100vh;
+            /* Full viewport height */
+            display: flex;
+            /* Use Flexbox */
+            align-items: center;
+            /* Center items vertically */
+            justify-content: flex-start;
+            /* Align items to the start (left) horizontally */
+            padding-left: 5%;
+            /* Or any other spacing you prefer */
+        }
+
+        .container {
+            width: 300px;
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            color: #333;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #17a2b8;
+            color: white;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Car Price Predictor</h2>
+        <!-- Offered By Dropdown -->
+        <select id="offered-by">
+            <option value="Firma">Firma</option>
+            <option value="Prywatne">Prywatne</option>
+            <!-- Add more options here -->
+        </select>
+
+        <!-- Car Brand Dropdown -->
+        <select id="car-brand-select" onchange="populateCarModels()">
+            <option value="Skoda">Skoda</option>
+            <option value="Seat">Seat</option>
+            <option value="Ford">Ford</option>
+            <option value="Hyundai">Hyundai</option>
+            <option value="BMW">BMW</option>
+            <option value="Toyota">Toyota</option>
+            <option value="MINI">MINI</option>
+            <option value="Volvo">Volvo</option>
+            <option value="Peugeot">Peugeot</option>
+            <option value="Renault">Renault</option>
+            <option value="Mazda">Mazda</option>
+            <option value="Nissan">Nissan</option>
+            <option value="Audi">Audi</option>
+            <option value="Mercedes-Benz">Mercedes-Benz</option>
+            <option value="Volkswagen">Volkswagen</option>
+            <!-- Add more car brands here -->
+        </select>
+
+        <select id="car-model-select">
+            <!-- Initially, this dropdown is empty -->
+        </select>
+
+
+        <!-- Production Year Dropdown -->
+        <select id="production-year">
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+            <option value="2019">2019</option>
+            <option value="2018">2018</option>
+            <option value="2017">2017</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+            <option value="2014">2014</option>
+            <option value="2013">2013</option>
+            <option value="2012">2012</option>
+            <option value="2011">2011</option>
+            <option value="2010">2010</option>
+            <option value="2009">2009</option>
+            <option value="2008">2008</option>
+            <option value="2007">2007</option>
+            <option value="2006">2006</option>
+            <option value="2005">2005</option>
+            <option value="2004">2004</option>
+            <option value="2003">2003</option>
+            <option value="2002">2002</option>
+            <option value="2001">2001</option>
+            <option value="2000">2000</option>
+            <!-- Add more years here -->
+        </select>
+
+        <!-- Fuel Type Dropdown -->
+        <select id="fuel-type">
+            <option value="Benzyna">Benzyna</option>
+            <option value="Diesel">Diesel</option>
+            <!-- Add more fuel types here -->
+        </select>
+
+        <!-- Transmission Dropdown -->
+        <select id="transmission">
+            <option value="Automatyczna">Automatyczna</option>
+            <option value="Manualna">Manualna</option>
+            <!-- Add more transmission types here -->
+        </select>
+
+        <!-- Body Type Dropdown -->
+        <select id="body-type">
+            <option value="Sedan">Sedan</option>
+            <option value="Kombi">Kombi</option>
+            <option value="SUV">SUV</option>
+            <option value="Kompakt">Kompakt</option>
+            <option value="Auta małe">Auta małe</option>
+            <option value="Auta miejskie">Auta miejskie</option>
+            <option value="Minivan">Minivan</option>
+            <option value="Kabriolet">Kabriolet</option>
+            <option value="Coupe">Coupe</option>
+            <!-- Add more body types here -->
+        </select>
+
+        <!-- Engine Category Dropdown -->
+        <select id="engine-category">
+            <option value="1000 CC">1000 CC</option>
+            <option value="1200 CC">1200 CC</option>
+            <option value="1400 CC">1400 CC</option>
+            <option value="1600 CC">1600 CC</option>
+            <option value="1800 CC">1800 CC</option>
+            <option value="2000 CC">2000 CC</option>
+            <option value="2200 CC">2200 CC</option>
+            <option value="3000 CC">3000 CC</option>
+            <!-- Add more engine categories here -->
+        </select>
+
+        <!-- Mileage Category Dropdown -->
+        <select id="mileage-category">
+            <option value="low">low</option>
+            <option value="low">medium</option>
+            <option value="low">high</option>
+            <!-- Add more mileage categories here -->
+        </select>
+
+        <!-- Add more dropdowns for each category -->
+
+        <button onclick="predictPrice()">Predict Price</button>
+        <p id="result"> Predicted price is : ..........</p>
+    </div>
+
+    <script>
+        function predictPrice() {
+            // Get values from each dropdown
+            var offeredBy = document.getElementById('offered-by').value;
+            var carBrand = document.getElementById('car-brand-select').value;
+            var carModel = document.getElementById('car-model-select').value;
+            var productionYear = parseInt(document.getElementById('production-year').value, 10);
+            var fuelType = document.getElementById('fuel-type').value;
+            var transmission = document.getElementById('transmission').value;
+            var bodyType = document.getElementById('body-type').value;
+            var engineCategory = document.getElementById('engine-category').value;
+            var mileageCategory = document.getElementById('mileage-category').value;
+
+            var data = {
+                "Offered by": offeredBy,
+                "Car brand": carBrand,
+                "Car model": carModel,
+                "Production year": productionYear,
+                "Fuel type": fuelType,
+                "Transmission": transmission,
+                "Body type": bodyType,
+                "Engine Category": engineCategory,
+                "Mileage category": mileageCategory
+            };
+
+            fetch('http://localhost:5000/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = 'Predicted Price: ' + data.prediction;
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+
+
+        // Define car models for each car brand
+        const carModels = {
+            'Skoda': [
+                'Octavia', 'Superb', 'Karoq', 'Scala', 'Fabia', 'Kodiaq',
+                'RAPID', 'Citigo', 'Roomster', 'Yeti', 'Kamiq', 'Praktik', 'Felicia'
+            ],
+            'Seat': [
+                'Leon', 'Cordoba', 'Ibiza', 'Altea', 'Exeo', 'Altea XL', 'Alhambra',
+                'Tarraco', 'Ateca', 'Arona', 'Arosa', 'Toledo', 'Mii', 'Inny'
+            ],
+            'Ford': [
+                'C-MAX', 'Focus', 'Fiesta', 'Transit', 'Ranger', 'Mondeo', 'S-Max',
+                'Kuga', 'Mustang', 'F150', 'Puma', 'Galaxy', 'EcoSport',
+                'Tourneo Courier', 'Focus C-Max', 'Grand C-MAX', 'EDGE',
+                'Transit Custom', 'Escape', 'KA', 'Fusion', 'Tourneo Connect',
+                'Tourneo Custom', 'Transit Courier', 'Explorer', 'B-MAX',
+                'Flex', 'Courier', 'Ka+', 'Excursion', 'Transit Connect',
+                'F250', 'Ranger Raptor', 'Tourneo Connect Grand', 'Crown',
+                'Maverick', 'Expedition', 'Bronco', 'Thunderbird', 'Econoline', 'F350',
+                'Freestar', 'Taurus'
+            ],
+            'Hyundai': [
+                'i30 N', 'Kona', 'I30', 'ix20', 'Tucson', 'ix55', 'ix35',
+                'i20', 'i40', 'Santa Fe', 'Elantra', 'Coupe', 'i10', 'Bayon',
+                'Genesis Coupe', 'Veloster', 'Getz', 'Sonata', 'Terracan',
+                'Genesis', 'Grand Santa Fe', 'H-1', 'Accent', 'Grandeur',
+                'Galloper', 'Atos', 'Palisade', 'Trajet', 'Matrix', 'Veracruz', 'IONIQ'
+            ],
+            'BMW': [
+                'Seria 3', 'X1', 'X5', 'Seria 5', 'Seria 2', 'Seria 1', 'X6',
+                'X2', 'X3', 'Seria 8', 'Seria 7', 'Seria 6', 'Seria 4', '5GT', '3GT',
+                'X4', 'M3', 'M5', 'M6', 'M2', 'X5 M', '6GT', 'X7', 'X6M', 'M4', '1M',
+                'Z4', 'X3 M', 'M8', 'Z4 M', 'X4 M', 'Z3', 'XM'
+            ],
+            'Toyota': [
+                'Avensis', 'Land Cruiser', 'Auris', 'RAV4', 'Aygo', 'Verso', 'Yaris',
+                'Tacoma', 'Corolla', 'Corolla Verso', 'C-HR', 'ProAce', 'Prius', 'iQ',
+                'Sienna', 'GT86', 'Camry', 'Previa', 'Aygo X', 'Proace Verso',
+                'Urban Cruiser', 'Hilux', 'Proace City Verso', 'Supra', 'Camry Solara',
+                'Highlander', 'FJ', '4-Runner', 'Celica', 'Tundra', 'Yaris Cross',
+                'Verso S', 'Proace City', 'GR86', 'Prius+', 'Yaris Verso', 'Sequoia',
+                'Avensis Verso', 'Corolla Cross', 'Venza', 'MR2', 'Hiace', 'Avalon'
+            ],
+            'MINI': [
+                'Countryman', 'Clubman', 'Cooper S', 'ONE', 'Cooper', 'John Cooper Works',
+                'Paceman'
+            ],
+            'Volvo': [
+                'S80', 'XC 60', 'C70', 'S60', 'XC 40', 'V50', 'V40', 'V90 Cross Country',
+                'V60', 'XC 90', 'XC 70', 'S90', 'V70', 'S40', 'V90', 'C30',
+                'V60 Cross Country'
+            ],
+            'Peugeot': [
+                '208', '3008', '2008', '508', '307', '308', '207', '206', 'Expert',
+                'Partner', '407', '107', '408', 'RCZ', '5008', '108', '406', '206 plus',
+                'Rifter', '308 CC', '807', 'Traveller', 'Bipper', '301', '307 CC', '607',
+                'Boxer', '1007', '106', '206 CC', '4008', '4007', '306', '207 CC'
+            ],
+            'Renault': [
+                'Laguna', 'Scenic', 'Twingo', 'Talisman', 'Grand Scenic', 'Clio',
+                'Kangoo', 'Trafic', 'Megane', 'Espace', 'Kadjar', 'Captur',
+                'Grand Espace', 'Thalia', 'Austral', 'Koleos', 'Latitude',
+                'Scenic RX4', 'Modus', 'Master', 'Fluence', '10', '5', 'Avantime', '4',
+                'Arkana', 'Vel Satis', 'Alaskan', 'Wind', 'Express'
+            ],
+            'Mazda': [
+                'CX-7', '6', 'CX-30', 'CX-5', 'CX-3', 'MX-5', '3', '2', 'CX-9',
+                'Tribute', 'BT-50', 'CX-60', 'Seria B', '323F', 'Premacy', 'MPV', '626',
+                'RX-8', 'Demio', 'Xedos', 'RX-7'
+            ],
+            'Nissan': [
+                'Juke', 'Qashqai', 'Rogue', 'X-Trail', 'Micra', 'Note',
+                'Navara', 'GT-R', 'Pathfinder', 'Tiida', '350 Z', 'Qashqai+2',
+                'Murano', 'Pulsar', 'Primera', 'Primastar', 'NV200', 'Pixo',
+                'Townstar', 'Patrol', 'Almera Tino', 'Almera', 'Terrano', 'Pickup',
+                'NP300 Pickup', 'Frontier', 'Cube', '370 Z', 'Maxima', 'Altima',
+                'NV300', 'Quest', 'Sentra', 'Armada', 'Titan', 'Silvia', 'Xterra',
+                'Interstar', 'King Cab'
+            ],
+            'Volkswagen': [
+                'Touareg', 'Arteon', 'CC', 'Touran', 'Golf', 'Tiguan', 'Passat',
+                'Polo', 'Caddy', 'Sharan', 'up!', 'Caravelle', 'Passat CC', 'T-Roc',
+                'Jetta', 'Golf Plus', 'Amarok', 'Phaeton', 'Tiguan Allspace',
+                'Crafter', 'Transporter', 'Taigo', 'T-Cross', 'Fox', 'Golf Sportsvan',
+                'Bora', 'Multivan', 'California', 'Scirocco', 'Eos', 'Atlas', 'Beetle',
+                'New Beetle', 'Routan', 'Lupo', 'Garbus', 'LT', 'TT', 'Q2', 'A7',
+                'Q3', 'TT RS', 'A1', 'Q7', 'Q8', 'RS7', 'S4', 'A6 Allroad', 'RS5',
+                'SQ8', 'S5', 'SQ7', 'A4 Allroad', 'RS Q3', 'RS6', 'R8',
+                'Q3 Sportback', 'S6', 'S7', 'RS Q8', 'S8', 'Cabriolet', 'A2',
+                'Q5 Sportback', 'TT S', 'SQ2', 'S1'
+            ],
+            'Audi': [
+                'A6', 'A5', 'SQ5', 'A4', 'A3', 'A8', 'RS4', 'S3', 'Q5', 'RS3', 'TT',
+                'Q2', 'A7', 'Q3', 'TT RS', 'A1', 'Q7', 'Q8', 'RS7', 'S4', 'A6 Allroad',
+                'RS5', 'SQ8', 'S5', 'SQ7', 'A4 Allroad', 'RS Q3', 'RS6', 'R8',
+                'Q3 Sportback', 'S6', 'S7', 'RS Q8', 'S8', 'Cabriolet', 'A2',
+                'Q5 Sportback', 'TT S', 'SQ2', 'S1'
+            ]
+        }
+
+
+
+        function populateCarModels() {
+            const carBrandSelect = document.getElementById('car-brand-select');
+            const carModelSelect = document.getElementById('car-model-select');
+
+            // Get the selected car brand
+            const selectedCarBrand = carBrandSelect.value;
+
+            // Clear existing options in the car model dropdown
+            carModelSelect.innerHTML = '';
+
+            // Populate the car model dropdown with options based on the selected car brand
+            carModels[selectedCarBrand].forEach((carModel) => {
+                const option = document.createElement('option');
+                option.value = carModel;
+                option.text = carModel;
+                carModelSelect.appendChild(option);
+            });
+        }
+
+        // Initially populate the car models based on the default selected car brand (e.g., Skoda)
+        populateCarModels();
+    </script>
+
+<script type="text/javascript">
+    (function(d, t) {
+        var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        v.onload = function() {
+          window.voiceflow.chat.load({
+            verify: { projectID: '66647cfa9f18d4a99a1cb5cc' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'production'
+          });
+        }
+        v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+    })(document, 'script');
+  </script>
+</body>
+
+</html>
