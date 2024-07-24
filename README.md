@@ -13,7 +13,7 @@ Estimate car prices with this machine learning-powered web application. Leveragi
 
 ### Installation & Usage
 
-1. **Clone:** `git clone https://github.com/yourusername/car-price-estimation.git`
+1. **Clone:** `git clone https://github.com/hamedahmed100/AI-Implementation.git`
 2. **Setup:**
    * `python3 -m venv venv`
    * `source venv/bin/activate` (or `venv\Scripts\activate` on Windows)
